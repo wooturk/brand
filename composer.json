@@ -1,0 +1,32 @@
+{
+    "name": "tulparstudyo/brand",
+    "description": "Tulparstudyo brand",
+    "keywords": [
+        "tulparstudyo",
+        "brand"
+    ],
+    "homepage": "https://github.com/tulparstudyo/brand",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ahmet Hamdi Bayrak",
+            "email": "ahmethamdibayrak@hotmail.com",
+            "homepage": "https://tulparstudyo.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/theseer/tulparstudyo/brand"
+    },
+    "require": {
+        "php": "^7.2 || ^8.0",
+        "ext-xmlwriter": "*",
+        "ext-dom": "*",
+        "ext-tokenizer": "*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    }
+}

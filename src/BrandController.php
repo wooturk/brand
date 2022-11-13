@@ -4,22 +4,24 @@ namespace Tulparstudyo;
 use App\Http\Controllers\Controller;
 use Google\Exception;
 use Illuminate\Http\Request;
-use Tulparite\Brand;
-use Tulparite\BrandDescription;
+
 
 class BrandController extends Controller
 {
-    //
 	function index(Request $request){
-		return BrandResponse::index(1, "Lütfen Giriş Yapınız");
+		return Response::success("Lütfen Giriş Yapınız");
+	}
+	function list(Request $request){
+		if($brands = get_brands( $request->all() )){
+			return Response::success("Marka Bilgileri", $brands);
+		}
+		return Response::failure("Marka Bulunamdı");
 	}
 	function get(Request $request, $id){
-		$brand = Brand::find($id);
-		if($brand){
-			return BrandResponse::success( "Marka Bulundu", $brand);
-		} else{
-			return BrandResponse::failure("Marka Bulunamadı");
+		if($brand = get_brand($id)){
+			return Response::success("Marka Bilgileri", $brand);
 		}
+		return Response::failure("Marka Bulunamdı");
 	}
 	function post(Request $request) {
 		$exception = '';
@@ -31,24 +33,17 @@ class BrandController extends Controller
 				'sort_order' => 'required|integer',
 				'state'      => 'required|boolean'
 			]);
-			$brand = Brand::create($fields);
+			$brand = create_brand($fields);
 			if($brand){
-				$description = [
-					'brand_id'=>	$brand->id,
-					'name'=>	$request->get('name'),
-					'description'=>	$request->get('description'),
-				];
-				BrandDescription::insert($description);
-				return BrandResponse::success( "Marka Oluşturuldu", $brand);
-
+				return Response::success("Marka Oluşturuldu", $brand);
 			}
-			return BrandResponse::failure("Marka Oluşturulamadı");
+			return Response::failure("Marka Oluşturulamadı");
 		} catch(\Illuminate\Database\QueryException $ex){
 			$exception = $ex->getMessage();
 		} catch (Exception $ex){
 			$exception = $ex->getMessage();
 		}
-		return BrandResponse::exception( '$exception');
+		return Response::exception( $exception);
 	}
 	function put(Request $request, $id){
 		$exception = '';
@@ -60,24 +55,17 @@ class BrandController extends Controller
 				'sort_order' => 'required|integer',
 				'state'      => 'required|boolean'
 			]);
-			$brand = Brand::where('id', $id)->update($fields);
+			$brand = update_brand($id, $fields);
 			if($brand){
-				$description = [
-					'brand_id'=>	$id,
-					'name'=>	$request->get('name'),
-					'description'=>	$request->get('description'),
-				];
-				BrandDescription::where('brand_id', $id)->update($description);
-				return BrandResponse::success( "Marka Güncellendi", $brand);
-
+				return Response::success("Marka Güncellendi", $brand);
 			}
-			return BrandResponse::failure("Marka Güncellenemedi");
+			return Response::failure("Marka Güncellenemedi");
 		} catch(\Illuminate\Database\QueryException $ex){
 			$exception = $ex->getMessage();
 		} catch (Exception $ex){
 			$exception = $ex->getMessage();
 		}
-		return BrandResponse::exception( '$exception');
+		return Response::exception( '$exception');
 	}
 	function delete(Request $request, $id){
 		$exception = '';
@@ -86,9 +74,9 @@ class BrandController extends Controller
 			if($brand){
 				Brand::destroy($id);
 				BrandDescription::where('brand_id', $id)->delete();
-				return BrandResponse::success( "Marka silindi", $brand);
+				return Response::success( "Marka silindi", $brand);
 			} else {
-				return BrandResponse::failure("Marka Bulunamadı");
+				return Response::failure("Marka Bulunamadı");
 			}
 			return BrandResponse::failure("Marka Silinemedi");
 		} catch(\Illuminate\Database\QueryException $ex){
@@ -96,7 +84,7 @@ class BrandController extends Controller
 		} catch (Exception $ex){
 			$exception = $ex->getMessage();
 		}
-		return BrandResponse::exception( '$exception');
+		return Response::exception( '$exception');
 
 	}
 }

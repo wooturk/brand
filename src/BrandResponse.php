@@ -15,4 +15,11 @@ class BrandResponse{
 			'data'=>$data
 		];
 	}
+	static public function exception($message, $data=[]){
+		return[
+			'status'=>0,
+			'message'=>"Sunucu Hatası! $message",
+			'data'=>$data
+		];
+	}
 }

@@ -16,7 +16,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/theseer/tulparstudyo/brand"
+        "issues": "https://github.com/tulparstudyo/brand"
     },
     "require": {
         "php": "^7.2 || ^8.0",

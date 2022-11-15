@@ -1,6 +1,6 @@
 <?php
 
-namespace Tulparstudyo;
+namespace Wooturk;
 use App\Http\Controllers\Controller;
 use Google\Exception;
 use Illuminate\Http\Request;
@@ -12,8 +12,8 @@ class BrandController extends Controller
 		return Response::success("Lütfen Giriş Yapınız");
 	}
 	function list(Request $request){
-		if($brands = get_brands( $request->all() )){
-			return Response::success("Marka Bilgileri", $brands);
+		if($rows = get_brands( $request->all() )){
+			return Response::success("Marka Bilgileri", $rows);
 		}
 		return Response::failure("Marka Bulunamdı");
 	}
@@ -84,7 +84,6 @@ class BrandController extends Controller
 		} catch (Exception $ex){
 			$exception = $ex->getMessage();
 		}
-		return Response::exception( '$exception');
-
+		return Response::exception( $exception );
 	}
 }

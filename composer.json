@@ -1,22 +1,22 @@
 {
-    "name": "tulparstudyo/brand",
-    "description": "Tulparstudyo brand",
+    "name": "wooturk/brand",
+    "description": "Wooturk brand",
     "keywords": [
-        "tulparstudyo",
+        "wooturk",
         "brand"
     ],
-    "homepage": "https://github.com/tulparstudyo/brand",
+    "homepage": "https://github.com/wooturk/brand",
     "license": "MIT",
     "authors": [
         {
             "name": "Ahmet Hamdi Bayrak",
             "email": "ahmethamdibayrak@hotmail.com",
-            "homepage": "https://tulparstudyo.com",
+            "homepage": "https://wooturk.com",
             "role": "Developer"
         }
     ],
     "support": {
-        "issues": "https://github.com/tulparstudyo/brand"
+        "issues": "https://github.com/wooturk/brand"
     },
     "require": {
         "php": "^7.2 || ^8.0",

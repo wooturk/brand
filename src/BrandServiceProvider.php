@@ -1,6 +1,6 @@
 <?php
 
-namespace Tulparstudyo;
+namespace Wooturk;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;

@@ -29,9 +29,9 @@ class BrandController extends Controller
 			$fields = $request->validate([
 				'name'       => 'required|string|max:255',
 				'code'       => 'required|string|max:32|unique:brands',
-				'rate'       => 'required|integer',
+				'slug'       => 'required|string',
 				'sort_order' => 'required|integer',
-				'state'      => 'required|boolean'
+				'status'      => 'required|boolean'
 			]);
 			$brand = create_brand($fields);
 			if($brand){
@@ -53,7 +53,7 @@ class BrandController extends Controller
 				'code'       => 'required|string|max:32|unique:brands',
 				'rate'       => 'required|integer',
 				'sort_order' => 'required|integer',
-				'state'      => 'required|boolean'
+				'status'      => 'required|boolean'
 			]);
 			$brand = update_brand($id, $fields);
 			if($brand){
@@ -85,5 +85,41 @@ class BrandController extends Controller
 			$exception = $ex->getMessage();
 		}
 		return Response::exception( $exception );
+	}
+
+	// MODELS
+	function models(Request $request, $id){
+		if($brand = get_brand($id)){
+			if($rows = get_brand_models( $id )){
+				return Response::success($brand['name']." Modelleri", $rows);
+			}
+			return Response::failure($brand['name']." Modelleri Bulunamdı");
+		} else{
+			return Response::failure("Marka Bulunamdı");
+		}
+	}
+	function model_post(Request $request) {
+		$exception = '';
+		try {
+			$fields = $request->validate([
+				'name'       => 'required|string|max:255',
+				'code'       => 'required|string|max:32|unique:brands',
+				'slug'       => 'required|string',
+				'sort_order' => 'required|integer',
+				'status'      => 'required|boolean',
+				'brand_id_code'      => 'string|max:32',
+				'parent_id_code'      => 'string|max:32'
+			]);
+			$brand = create_model($fields);
+			if($brand){
+				return Response::success("Model Oluşturuldu", $brand);
+			}
+			return Response::failure("Model Oluşturulamadı");
+		} catch(\Illuminate\Database\QueryException $ex){
+			$exception = $ex->getMessage();
+		} catch (Exception $ex){
+			$exception = $ex->getMessage();
+		}
+		return Response::exception( $exception);
 	}
 }
